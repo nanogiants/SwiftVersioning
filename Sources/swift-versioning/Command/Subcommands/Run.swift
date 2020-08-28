@@ -6,16 +6,15 @@
 import ArgumentParser
 
 struct Run: ParsableCommand {
-    public static let configuration = CommandConfiguration(
-        abstract: "Let the tool run through your repository and add specifics to your apps plist.")
+    public static let configuration = CommandConfiguration(abstract: Abstract.SwiftVersioning.run)
 
-    @Argument(help: "Path to plist.")
+    @Argument(help: ArgumentHelp.SwiftVersioning.Run.path)
     private var path: String
 
-    @Flag(name: .shortAndLong, help: "Append branch name of the current head branch.")
+    @Flag(name: .shortAndLong, help: ArgumentHelp.SwiftVersioning.Run.branch)
     private var branch: Bool = false
 
-    @Flag(name: .long, help: "Show extra logging for debugging purposes.")
+    @Flag(name: .long, help: ArgumentHelp.SwiftVersioning.Run.verbose)
     private var verbose: Bool = false
 
     func run() throws {
