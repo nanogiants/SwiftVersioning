@@ -5,7 +5,7 @@
 
 import Foundation
 
-internal enum ArgumentHelp {
+internal enum Help {
     internal enum SwiftVersioning {
         internal enum Run {
             internal static let path = "Path to plist."

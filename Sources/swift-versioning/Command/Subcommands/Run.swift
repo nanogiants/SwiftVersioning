@@ -8,13 +8,13 @@ import ArgumentParser
 struct Run: ParsableCommand {
     public static let configuration = CommandConfiguration(abstract: Abstract.SwiftVersioning.run)
 
-    @Argument(help: ArgumentHelp.SwiftVersioning.Run.path)
+    @Argument(help: "\(Help.SwiftVersioning.Run.path)")
     private var path: String
 
-    @Flag(name: .shortAndLong, help: ArgumentHelp.SwiftVersioning.Run.branch)
+    @Flag(name: .shortAndLong, help: ArgumentHelp(Help.SwiftVersioning.Run.branch, discussion: "", shouldDisplay: true))
     private var branch: Bool = false
 
-    @Flag(name: .long, help: ArgumentHelp.SwiftVersioning.Run.verbose)
+    @Flag(name: .long, help: ArgumentHelp(Help.SwiftVersioning.Run.verbose, discussion: "", shouldDisplay: true))
     private var verbose: Bool = false
 
     func run() throws {
