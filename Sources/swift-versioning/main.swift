@@ -1,0 +1,1 @@
+SwiftVersioning.main()
