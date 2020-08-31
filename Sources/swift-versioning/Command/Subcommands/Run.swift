@@ -18,21 +18,29 @@ struct Run: ParsableCommand {
     private var verbose: Bool = false
 
     func run() throws {
-        let gitHandler = GitHandler()
+        let versionHandler: VersionHandlerProtocol = VersionHandler(for: .git)
 
-        let majorVersion = gitHandler.majorVersion
-        let minorVersion = gitHandler.minorVersion
-        let patchVersion = gitHandler.patchVersion
+        let majorVersion = versionHandler.major
+        let minorVersion = versionHandler.minor
+        let patchVersion = versionHandler.patch
 
-        let buildNumber = gitHandler.buildNumber
+        let buildNumber = versionHandler.build
         var branchName: String?
         if branch {
-            branchName = gitHandler.branchName
+            branchName = versionHandler.branch
         }
 
         if verbose {
-            print("Path: \(path)")
-            print("appendBranch: \(branch)")
+            print("Checking arguments:")
+            print("... path: \(path)")
+            print("... append branch: \(branch)")
+
+            print("Checking version:")
+            print("... majorVersion: \(majorVersion)")
+            print("... minorVersion: \(minorVersion)")
+            print("... patchVersion: \(patchVersion)")
+            print("... buildNumber: \(buildNumber)")
+            print("... branchName: \(branchName ?? "")")
         }
     }
 }
