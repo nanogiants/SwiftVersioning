@@ -7,7 +7,7 @@ import ArgumentParser
 
 struct SwiftVersioning: ParsableCommand {
     public static let configuration = CommandConfiguration(
-        abstract: "A Swift command-line tool to add git versioning to your Xcode project.",
+        abstract: Abstract.swiftVersioning,
         subcommands: [Run.self])
 
     init() {}
