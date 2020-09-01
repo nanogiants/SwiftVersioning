@@ -18,10 +18,8 @@ enum VersioningTool {
     var tagArguments: [String] {
         switch self {
         case .git:
-            return ["show-ref", "--tags", " | ", "egrep",  "-q", "refs/tags/$1$"]
+            return ["describe", "--abbrev=0", "--tags"]
         }
-
-        git show-ref --tags | egrep -q "refs/tags/$1$"
     }
 
     var buildArguments: [String] {
@@ -40,9 +38,10 @@ enum VersioningTool {
 }
 
 protocol VersionHandlerProtocol {
-    var major: String { get }
-    var minor: String { get }
-    var patch: String { get }
+    var major: String? { get }
+    var minor: String? { get }
+    var patch: String? { get }
+    var attachments: String? { get }
     var build: String { get }
     var branch: String { get }
 }
@@ -50,31 +49,48 @@ protocol VersionHandlerProtocol {
 final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Properties
 
-    public var major: String {
-        ""
+    public var major: String? {
+        if !tagBits.isEmpty {
+            return tagBits[0]
+        }
+
+        return nil
     }
 
-    public var minor: String {
-        ""
+    public var minor: String? {
+        if tagBits.count > 1 {
+            return tagBits[1]
+        }
+
+        return nil
     }
 
-    public var patch: String {
-        ""
+    public var patch: String? {
+        if tagBits.count > 2 {
+            return tagBits[2].components(separatedBy: "_").first
+        }
+
+        return nil
     }
 
-    public var build: String {
-        launch(command: tool.command, arguments: tool.buildArguments)
+    public var attachments: String? {
+        if tagBits.count > 2 {
+            var attArray = tagBits[2].components(separatedBy: "_")
+            attArray.removeFirst()
+            return attArray.joined(separator: "_")
+        }
+
+        return nil
     }
 
-    public var branch: String {
-        launch(command: tool.command, arguments: tool.branchArguments)
-    }
+    public var build: String { launch(command: tool.command, arguments: tool.buildArguments) }
+    public var branch: String { launch(command: tool.command, arguments: tool.branchArguments) }
 
     // MARK: - Private Properties
 
-    private var tag: String {
-        launch(command: tool.command, arguments: tool.tagArguments)
-    }
+    private var tag: String { launch(command: tool.command, arguments: tool.tagArguments) }
+    private var tagBits: [String] { tag.components(separatedBy: ".") }
+
     private var tool: VersioningTool
 
     // MARK: - Init

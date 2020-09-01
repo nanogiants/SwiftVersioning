@@ -23,6 +23,7 @@ struct Run: ParsableCommand {
         let majorVersion = versionHandler.major
         let minorVersion = versionHandler.minor
         let patchVersion = versionHandler.patch
+        let attachments = versionHandler.attachments
 
         let buildNumber = versionHandler.build
         var branchName: String?
@@ -36,9 +37,10 @@ struct Run: ParsableCommand {
             print("... append branch: \(branch)")
 
             print("Checking version:")
-            print("... majorVersion: \(majorVersion)")
-            print("... minorVersion: \(minorVersion)")
-            print("... patchVersion: \(patchVersion)")
+            print("... majorVersion: \(majorVersion ?? "")")
+            print("... minorVersion: \(minorVersion ?? "")")
+            print("... patchVersion: \(patchVersion ?? "")")
+            print("... patchVersion: \(attachments ?? "")")
             print("... buildNumber: \(buildNumber)")
             print("... branchName: \(branchName ?? "")")
         }
