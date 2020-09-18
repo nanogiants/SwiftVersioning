@@ -92,8 +92,6 @@ final class VersionHandler: VersionHandlerProtocol {
     private var tagBits: [String] { tag.components(separatedBy: ".") }
 
     private var tool: VersioningTool
-    
-    private var test: String?
 
     // MARK: - Init
 
