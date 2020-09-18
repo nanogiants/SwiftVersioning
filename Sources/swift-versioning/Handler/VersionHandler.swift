@@ -89,7 +89,7 @@ final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Private Properties
 
     private var tag: String { launch(command: tool.command, arguments: tool.tagArguments) }
-    private var tagBits: [String] { tag.components(separatedBy: "..") }
+    private var tagBits: [String] { tag.components(separatedBy: ".") }
 
     private var tool: VersioningTool
 
