@@ -19,17 +19,17 @@ struct Run: ParsableCommand {
 
     func run() throws {
         let versionHandler: VersionHandlerProtocol = VersionHandler(for: .git)
-
-        let majorVersion = versionHandler.major
-        let minorVersion = versionHandler.minor
-        let patchVersion = versionHandler.patch
-        let attachments = versionHandler.attachments
-
-        let buildNumber = versionHandler.build
-        var branchName: String?
-        if branch {
-            branchName = versionHandler.branch
-        }
+        let plistHandler: PlistHandlerProtocol = PlistHandler(pathToPlist: path)
+        
+        let version = Version(ngVersion: versionHandler.version,
+                              ngBranch: versionHandler.branch,
+                              ngMajor: versionHandler.major,
+                              ngMinor: versionHandler.minor,
+                              ngPatch: versionHandler.patch,
+                              ngBuild: versionHandler.build,
+                              ngAttachments: versionHandler.attachments)
+        
+        plistHandler.write(version)
 
         if verbose {
             print("Checking arguments:")
@@ -37,12 +37,7 @@ struct Run: ParsableCommand {
             print("... append branch: \(branch)")
 
             print("Checking version:")
-            print("... majorVersion: \(majorVersion ?? "")")
-            print("... minorVersion: \(minorVersion ?? "")")
-            print("... patchVersion: \(patchVersion ?? "")")
-            print("... patchVersion: \(attachments ?? "")")
-            print("... buildNumber: \(buildNumber)")
-            print("... branchName: \(branchName ?? "")")
+            print("...: \(version)")
         }
     }
 }

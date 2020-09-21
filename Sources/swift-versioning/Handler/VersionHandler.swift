@@ -38,16 +38,20 @@ enum VersioningTool {
 }
 
 protocol VersionHandlerProtocol {
+    var version: String { get }
+    var branch: String { get }
+    
     var major: String? { get }
     var minor: String? { get }
     var patch: String? { get }
     var attachments: String? { get }
     var build: String { get }
-    var branch: String { get }
 }
 
 final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Properties
+    
+    public var version: String { tag }
 
     public var major: String? {
         if !tagBits.isEmpty {
