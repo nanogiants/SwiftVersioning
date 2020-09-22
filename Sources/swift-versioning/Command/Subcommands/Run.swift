@@ -4,10 +4,15 @@
 //
 
 import ArgumentParser
+import Resolver
 
 struct Run: ParsableCommand {
+    // MARK: - Properties
+    
     public static let configuration = CommandConfiguration(abstract: Abstract.SwiftVersioning.run)
 
+    // MARK: - Command
+    
     @Argument(help: "\(Help.SwiftVersioning.Run.path)")
     private var path: String
 
@@ -16,28 +21,19 @@ struct Run: ParsableCommand {
 
     @Flag(name: .long, help: ArgumentHelp(Help.SwiftVersioning.Run.verbose, discussion: "", shouldDisplay: true))
     private var verbose: Bool = false
+    
+    // MARK: - Run
 
     func run() throws {
-        let versionHandler: VersionHandlerProtocol = VersionHandler(for: .git)
-        let plistHandler: PlistHandlerProtocol = PlistHandler(pathToPlist: path)
+        let versionManager: VersionManagerProtocol = Resolver.resolve()
+        let plistHandler: PlistHandlerProtocol = Resolver.resolve()
         
-        let version = Version(ngVersion: versionHandler.version,
-                              ngBranch: versionHandler.branch,
-                              ngMajor: versionHandler.major,
-                              ngMinor: versionHandler.minor,
-                              ngPatch: versionHandler.patch,
-                              ngBuild: versionHandler.build,
-                              ngAttachments: versionHandler.attachments)
-        
-        plistHandler.write(version)
+        plistHandler.write(versionManager.version(attachBranch: branch), to: path)
 
         if verbose {
             print("Checking arguments:")
             print("... path: \(path)")
             print("... append branch: \(branch)")
-
-            print("Checking version:")
-            print("...: \(version)")
         }
     }
 }
