@@ -25,15 +25,15 @@ struct Run: ParsableCommand {
     // MARK: - Run
 
     func run() throws {
+        Log.verbose = verbose
+        
         let versionManager: VersionManagerProtocol = Resolver.resolve()
         let plistHandler: PlistHandlerProtocol = Resolver.resolve()
         
         plistHandler.write(versionManager.version(attachBranch: branch), to: path)
 
-        if verbose {
-            print("Checking arguments:")
-            print("... path: \(path)")
-            print("... append branch: \(branch)")
-        }
+        Log.verbose("Checking arguments:")
+        Log.verbose("... path: \(path)")
+        Log.verbose("... append branch: \(branch)")
     }
 }

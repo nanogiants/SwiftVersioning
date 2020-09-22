@@ -8,7 +8,7 @@ import Foundation
 public struct Log {
     static var verbose: Bool = false
     
-    func verbose(_ items: Any...) {
+    static func verbose(_ items: Any...) {
         if Log.verbose {
             print(items)
         }
