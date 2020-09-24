@@ -18,7 +18,7 @@ final class PlistHandler: PlistHandlerProtocol {
             let plistUrl: URL = URL(fileURLWithPath: plistPathString, isDirectory: false)
             save(version, to: plistUrl)
         } else {
-            // TODO: error handling -> no valid path to plist
+            // TODO: error handling -> no valid path to plist -> plistNotFound
         }
     }
     
@@ -33,12 +33,7 @@ final class PlistHandler: PlistHandlerProtocol {
                     Log.verbose("... beginn writing to plist.")
                     try mergedData.write(to: plistUrl, options: .atomic)
                     Log.verbose("... done!")
-                } else {
-                    // TODO: error handling -> could read plist
                 }
-            } else {
-                // TODO: error handling -> could read plist
-                Log.verbose("Error: couldn't fetch plist")
             }
         } catch {
             // TODO: error handling -> could not write data
@@ -54,15 +49,15 @@ final class PlistHandler: PlistHandlerProtocol {
                 let plistDict = try PropertyListSerialization.dictionary(from: plist)
                 return plistDict
             } catch {
-                // TODO: error handling -> couldn't decode existing plist
+                // TODO: error handling -> couldn't decode existing plist -> plistNotDe
                 Log.verbose("Error: couldn't decode existing plist to data")
+                return nil
             }
         } else {
-            // TODO: error handling -> couldn't read plist
+            // TODO: error handling -> couldn't read plist -> plistNotReadable
             Log.verbose("Error: couldn't read plist from file")
+            return nil
         }
-        
-        return nil
     }
 }
 
