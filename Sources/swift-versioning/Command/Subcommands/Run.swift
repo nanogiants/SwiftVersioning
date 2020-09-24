@@ -16,9 +16,6 @@ struct Run: ParsableCommand {
     @Argument(help: "\(Help.SwiftVersioning.Run.path)")
     private var path: String
 
-    @Flag(name: .shortAndLong, help: ArgumentHelp(Help.SwiftVersioning.Run.branch, discussion: "", shouldDisplay: true))
-    private var branch: Bool = false
-
     @Flag(name: .long, help: ArgumentHelp(Help.SwiftVersioning.Run.verbose, discussion: "", shouldDisplay: true))
     private var verbose: Bool = false
     
@@ -29,11 +26,10 @@ struct Run: ParsableCommand {
         
         Log.verbose("Checking arguments:")
         Log.verbose("... path: \(path)")
-        Log.verbose("... append branch: \(branch)")
         
         let versionManager: VersionManagerProtocol = Resolver.resolve()
         let plistHandler: PlistHandlerProtocol = Resolver.resolve()
         
-        plistHandler.write(versionManager.version(attachBranch: branch), to: path)
+        plistHandler.write(versionManager.version(), to: path)
     }
 }
