@@ -51,14 +51,8 @@ final class PlistHandler: PlistHandlerProtocol {
         
         if let plist = FileManager.default.contents(atPath: plistUrl.path) {
             do {
-                var format: PropertyListSerialization.PropertyListFormat = .xml
-                let plistData = try PropertyListSerialization.propertyList(from: plist, options: .mutableContainersAndLeaves, format: &format)
-                if let plistDict = plistData as? [String: Any] {
-                    return plistDict
-                } else {
-                    // TODO: error handling -> couldn't cast plistData as dict
-                    Log.verbose("Error: couldn't cast plistData as dict")
-                }
+                let plistDict = try PropertyListSerialization.dictionary(from: plist)
+                return plistDict
             } catch {
                 // TODO: error handling -> couldn't decode existing plist
                 Log.verbose("Error: couldn't decode existing plist to data")
