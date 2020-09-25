@@ -15,7 +15,7 @@ extension PropertyListSerialization {
                 return dictionary
             }
         } catch {
-            Log.error("Unable to convert plist file into data: \(error)")
+            Log.error("Unable to convert plist into convertable object: \(error)")
             return nil
         }
 

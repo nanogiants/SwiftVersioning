@@ -25,11 +25,14 @@ struct Version: Codable {
     }
     
     func dictionary() -> [String: Any]? {
+        Log.info("Converting version to mergable dictionary.")
         do {
             let encoder = PropertyListEncoder()
             encoder.outputFormat = .xml
-            
+
+            Log.verbose("... encoding version to data.")
             let data = try encoder.encode(self)
+            Log.verbose("... converting data to dictionary.")
             let plist = PropertyListSerialization.dictionary(from: data)
             
             return plist
