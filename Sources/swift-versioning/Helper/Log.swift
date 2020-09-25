@@ -4,21 +4,44 @@
 //
 
 import Foundation
+import Logging
 
-public struct Log {
-    static var verbose: Bool = false
-    
-    static func info(_ item: String) {
-        print(item)
+final class Log {
+    // MARK: - Properties
+
+    static var isVerbose: Bool = false
+
+    private static var sharedLog: Log = {
+        Log()
+    }()
+
+    private var logger: Logger
+
+    // MARK: - Init
+
+    private init() {
+        self.logger = Logger(label: "test")
     }
-    
-    static func verbose(_ item: String) {
-        if Log.verbose {
-            print(item)
-        }
+
+    // MARK: - Methods
+
+    class func verbose(_ message: Logger.Message) {
+        sharedLog.logger.trace(message)
     }
-    
-    static func debug(_ item: String) {
-        debugPrint(item)
+
+    class func info(_ message: Logger.Message) {
+        sharedLog.logger.info(message)
+    }
+
+    class func debug(_ message: Logger.Message) {
+        sharedLog.logger.debug(message)
+    }
+
+    class func warning(_ message: Logger.Message) {
+        sharedLog.logger.warning(message)
+    }
+
+    class func error(_ message: Logger.Message) {
+        sharedLog.logger.error(message)
     }
 }

@@ -22,7 +22,7 @@ struct Run: ParsableCommand {
     // MARK: - Run
 
     func run() throws {
-        Log.verbose = verbose
+        Log.isVerbose = verbose
         
         Log.verbose("Checking arguments:")
         Log.verbose("... path: \(path)")
