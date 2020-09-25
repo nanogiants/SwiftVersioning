@@ -18,6 +18,10 @@ extension Process {
         guard let outputData = String(data: data, encoding: String.Encoding.utf8) else { return "" }
 
         return outputData.reduce("") { (result, value) in
+            if value.isWhitespace {
+                return result
+            }
+
             return result + String(value)
         }
     }
