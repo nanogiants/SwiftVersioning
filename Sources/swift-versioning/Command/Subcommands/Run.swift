@@ -22,10 +22,10 @@ struct Run: ParsableCommand {
     // MARK: - Run
 
     func run() throws {
-        Log.isVerbose = verbose
-        
+        Log.logLevel(verbose)
         Log.verbose("Checking arguments:")
         Log.verbose("... path: \(path)")
+        Log.verbose("... verbose: \(verbose)")
         
         let versionManager: VersionManagerProtocol = Resolver.resolve()
         let plistHandler: PlistHandlerProtocol = Resolver.resolve()

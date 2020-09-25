@@ -9,20 +9,6 @@ import Logging
 final class Log {
     // MARK: - Properties
 
-    static var isVerbose: Bool = false {
-        didSet {
-            if isVerbose {
-                sharedLog.logger.logLevel = .trace
-            } else {
-                sharedLog.logger.logLevel = .info
-            }
-
-            #if DEBUG
-            sharedLog.logger.logLevel = .trace
-            #endif
-        }
-    }
-
     private static var sharedLog: Log = {
         Log()
     }()
@@ -33,10 +19,14 @@ final class Log {
 
     private init() {
         self.logger = Logger(label: "eu.NanoGiants.swift-versioning",
-                             factory: StreamLogHandler.standardOutput(label:))
+                             factory: StreamLogHandler.standardError(label:))
     }
 
     // MARK: - Methods
+
+    class func logLevel(_ isVerbose: Bool) {
+        sharedLog.logger.logLevel = isVerbose ? .trace : .info
+    }
 
     class func verbose(_ message: Logger.Message) {
         sharedLog.logger.trace(message)
