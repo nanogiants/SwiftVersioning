@@ -6,7 +6,7 @@
 import Foundation
 
 struct Version: Codable {
-    var version: String
+    var version: String?
     var branch: String
     var major: String?
     var minor: String?
