@@ -5,38 +5,6 @@
 
 import Foundation
 
-enum VersioningTool {
-    case git
-
-    var command: String {
-        switch self {
-        case .git:
-            return "git"
-        }
-    }
-
-    var tagArguments: [String] {
-        switch self {
-        case .git:
-            return ["describe", "--abbrev=0", "--tags"]
-        }
-    }
-
-    var buildArguments: [String] {
-        switch self {
-        case .git:
-            return ["rev-list", "--count", "HEAD"]
-        }
-    }
-
-    var branchArguments: [String] {
-        switch self {
-        case .git:
-            return ["rev-parse", "--abbrev-ref", "HEAD"]
-        }
-    }
-}
-
 protocol VersionHandlerProtocol {
     var version: String { get }
     var branch: String { get }
@@ -95,11 +63,11 @@ final class VersionHandler: VersionHandlerProtocol {
     private var tag: String { launch(command: tool.command, arguments: tool.tagArguments) }
     private var tagBits: [String] { tag.components(separatedBy: ".") }
 
-    private var tool: VersioningTool
+    private var tool: VersionControlSystem
 
     // MARK: - Init
 
-    init(for tool: VersioningTool) {
+    init(for tool: VersionControlSystem) {
         self.tool = tool
     }
 }

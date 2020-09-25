@@ -10,7 +10,7 @@ extension Resolver: ResolverRegistering {
         register { VersionManager() as VersionManagerProtocol }
             .implements(VersionHandlerProtocol.self)
         
-        register { VersionHandler(for: .git) as VersionHandlerProtocol }
+        register { VersionHandler(for: Git()) as VersionHandlerProtocol }
         register { PlistHandler() as PlistHandlerProtocol }
     }
 }
