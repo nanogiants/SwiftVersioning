@@ -30,11 +30,11 @@ struct Version: Codable {
             encoder.outputFormat = .xml
             
             let data = try encoder.encode(self)
-            let plist = try PropertyListSerialization.dictionary(from: data)
+            let plist = PropertyListSerialization.dictionary(from: data)
             
             return plist
         } catch {
-            Log.verbose("Error: couldn't read plist: \(error)")
+            Log.error("Unable to encode `Version` to data: \(error)")
             return nil
         }
     }

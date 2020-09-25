@@ -14,11 +14,8 @@ final class PlistHandler: PlistHandlerProtocol {
     
     func write(_ version: Version, to plistPathString: String) {
         Log.verbose("Write version:")
-        if plistPathString.isValid() {
-            let plistUrl: URL = URL(fileURLWithPath: plistPathString, isDirectory: false)
+        if let plistUrl = plistPathString.validPath() {
             save(version, to: plistUrl)
-        } else {
-            // TODO: error handling -> no valid path to plist -> plistNotFound
         }
     }
     
@@ -36,8 +33,7 @@ final class PlistHandler: PlistHandlerProtocol {
                 }
             }
         } catch {
-            // TODO: error handling -> could not write data
-            Log.verbose("Error: couldn't read plist: \(error)")
+            Log.error("Unable to write merged plist and version data to plist: \(error)")
         }
     }
     
@@ -45,24 +41,24 @@ final class PlistHandler: PlistHandlerProtocol {
         Log.verbose("... reading existing plist.")
         
         if let plist = FileManager.default.contents(atPath: plistUrl.path) {
-            do {
-                let plistDict = try PropertyListSerialization.dictionary(from: plist)
-                return plistDict
-            } catch {
-                // TODO: error handling -> couldn't decode existing plist -> plistNotDe
-                Log.verbose("Error: couldn't decode existing plist to data")
-                return nil
-            }
-        } else {
-            // TODO: error handling -> couldn't read plist -> plistNotReadable
-            Log.verbose("Error: couldn't read plist from file")
-            return nil
+            return PropertyListSerialization.dictionary(from: plist)
         }
+
+        Log.error("Unable to read content from plist.")
+        return nil
     }
 }
 
 fileprivate extension String {
-    func isValid() -> Bool {
-        FileManager.default.fileExists(atPath: self)
+    func validPath() -> URL? {
+        if FileManager.default.fileExists(atPath: self) {
+            let url: URL = URL(fileURLWithPath: self, isDirectory: false)
+            if url.pathExtension == "plist" {
+                return url
+            }
+        }
+
+        Log.error("No file at given path.")
+        return nil
     }
 }
