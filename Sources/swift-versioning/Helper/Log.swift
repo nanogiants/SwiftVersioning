@@ -42,5 +42,6 @@ final class Log {
 
     class func error(_ message: Logger.Message) {
         sharedLog.logger.error(message)
+        exit(EXIT_FAILURE)
     }
 }

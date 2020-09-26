@@ -32,6 +32,7 @@ final class PlistHandler: PlistHandlerProtocol {
                     Log.verbose("... beginn writing to plist.")
                     try mergedData.write(to: plistUrl, options: .atomic)
                     Log.info("Done!")
+                    exit(EXIT_SUCCESS)
                 }
             }
         } catch {
