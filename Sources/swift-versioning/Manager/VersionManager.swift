@@ -19,11 +19,33 @@ final class VersionManager: VersionManagerProtocol {
     
     func version() -> Version {
         Version(version: versionHandler.version,
-                branch: versionHandler.branch,
+                versionLong: versionLong(),
                 major: versionHandler.major,
                 minor: versionHandler.minor,
                 patch: versionHandler.patch,
                 build: versionHandler.build,
-                attachments: versionHandler.attachments)
+                branch: versionHandler.branch,
+                branchLong: versionHandler.branchLong,
+                branchFlow: versionHandler.branchFlow)
     }
+    
+    // MARK: - Private Methods
+    
+    private func versionLong() -> String? {
+        var versionLong: String?
+        if let version = versionHandler.version {
+            versionLong = "\(version) (\(versionHandler.build))"
+        }
+        
+        return versionLong
+    }
+    
+//    private func branchLong() -> String {
+//        var branchLong: String = versionHandler.branch
+//        if let branchFlow = versionHandler.branchFlow {
+//            branchLong = "\(branchFlow)/\(versionHandler.branch)"
+//        }
+//
+//        return branchLong
+//    }
 }

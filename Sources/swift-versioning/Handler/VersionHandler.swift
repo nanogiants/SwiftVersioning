@@ -12,8 +12,9 @@ protocol VersionHandlerProtocol {
     var patch: String? { get }
     var build: String { get }
 
-    var attachments: String? { get }
     var branch: String { get }
+    var branchLong: String { get }
+    var branchFlow: String? { get }
 }
 
 final class VersionHandler: VersionHandlerProtocol {
@@ -27,16 +28,32 @@ final class VersionHandler: VersionHandlerProtocol {
         launch(command: tool.command, arguments: tool.buildArguments)
     }
 
-    var attachments: String?
     var branch: String {
-        launch(command: tool.command, arguments: tool.branchArguments)
+        let separator = "/"
+        let branchComponents = branchCommandOutput.components(separatedBy: separator)
+        if !(branchComponents.count <= 1) {
+            branchFlow = branchComponents.first
+            return branchComponents[1]
+        }
+        
+        return branchComponents.joined(separator: separator)
     }
+    
+    var branchLong: String {
+        branchCommandOutput
+    }
+    
+    var branchFlow: String?
 
     // MARK: - Private Properties
 
     private var tag: String {
         launch(command: tool.command, arguments: tool.tagArguments)
     }
+    
+    private lazy var branchCommandOutput: String = {
+        launch(command: tool.command, arguments: tool.branchArguments)
+    }()
 
     private var tagBits: [String]?
     private var isReleaseCandidate: Bool = false
@@ -57,7 +74,6 @@ final class VersionHandler: VersionHandlerProtocol {
         
         setupVersion()
         setupSemantics()
-        setupAttachments()
     }
     
     private func checkVersionControlSystem() {
@@ -97,23 +113,5 @@ final class VersionHandler: VersionHandlerProtocol {
         } else {
             Log.error("Unable to retrieve semantics from tag.")
         }
-    }
-
-    private func setupAttachments() {
-        let releaseString: String = isReleaseCandidate ? "release" : "feature"
-
-        var branchInfoString: String = ""
-        var branchInfoStrings: [String] = branch
-            .components(separatedBy: "/")[1]
-            .components(separatedBy: "_")
-        branchInfoStrings.append(releaseString)
-        if let possibleVersionString = branchInfoStrings.first {
-            if possibleVersionString == version ?? "" {
-                branchInfoStrings.removeFirst()
-            }
-        }
-
-        branchInfoString = branchInfoStrings.joined(separator: "_")
-        attachments = "\(branchInfoString)"
     }
 }

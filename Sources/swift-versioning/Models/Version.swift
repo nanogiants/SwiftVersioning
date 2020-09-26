@@ -7,21 +7,27 @@ import Foundation
 
 struct Version: Codable {
     var version: String?
-    var branch: String
+    var versionLong: String?
     var major: String?
     var minor: String?
     var patch: String?
-    var build: String
-    var attachments: String?
+    var build: String?
+    
+    var branch: String?
+    var branchLong: String?
+    var branchFlow: String?
     
     enum CodingKeys: String, CodingKey {
-        case version = "NGVersion"
-        case branch = "NGBranch"
-        case major = "NGMajor"
-        case minor = "NGMinor"
-        case patch = "NGPatch"
-        case build = "NGBuild"
-        case attachments = "NGAttachments"
+        case version = "SVVersion"
+        case versionLong = "SVVersionLong"
+        case major = "SVMajorVersion"
+        case minor = "SVMinorVersion"
+        case patch = "SVPatchVersion"
+        case build = "SVBuildNumber"
+        
+        case branch = "SVBranch"
+        case branchLong = "SVBranchLong"
+        case branchFlow = "SVBranchFlow"
     }
     
     func dictionary() -> [String: Any]? {
