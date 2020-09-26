@@ -10,6 +10,8 @@ protocol VersionControlSystem {
     var tagArguments: [String] { get }
     var buildArguments: [String] { get }
     var branchArguments: [String] { get }
+    var repositoryCheckArguments: [String] { get }
+    var isRepositoryOutput: String { get }
 }
 
 struct Git: VersionControlSystem {
@@ -27,5 +29,13 @@ struct Git: VersionControlSystem {
 
     var branchArguments: [String] {
         ["rev-parse", "--abbrev-ref", "HEAD"]
+    }
+    
+    var repositoryCheckArguments: [String] {
+        ["rev-parse", "--git-dir"]
+    }
+    
+    var isRepositoryOutput: String {
+        ".git"
     }
 }

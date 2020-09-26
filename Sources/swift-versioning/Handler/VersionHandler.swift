@@ -53,9 +53,23 @@ final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Private Methods
 
     private func bootstrap() {
+        checkVersionControlSystem()
+        
         setupVersion()
         setupSemantics()
         setupAttachments()
+    }
+    
+    private func checkVersionControlSystem() {
+        let isToolInstalled = launch(command: "which", arguments: [tool.command]) != "\(tool.command) not found"
+        let isRepository = launch(command: tool.command, arguments: tool.repositoryCheckArguments) == tool.isRepositoryOutput
+        if isToolInstalled {
+            if !isRepository {
+                Log.error("Unable to read version from directory that is not a repository!")
+            }
+        } else {
+            Log.error("\(tool.command) not installed!")
+        }
     }
 
     private func setupVersion() {
