@@ -7,10 +7,9 @@ import Resolver
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {
-        register { VersionManager() as VersionManagerProtocol }
-            .implements(VersionHandlerProtocol.self)
-        
+        register { CommandHandler() as CommandHandlerProtocol }
         register { VersionHandler(for: Git()) as VersionHandlerProtocol }
         register { PlistHandler() as PlistHandlerProtocol }
+        register { VersionManager() as VersionManagerProtocol }
     }
 }

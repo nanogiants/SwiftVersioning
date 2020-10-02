@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import Resolver
 
 protocol VersionHandlerProtocol {
     var version: String? { get }
@@ -25,7 +26,7 @@ final class VersionHandler: VersionHandlerProtocol {
     var minor: String?
     var patch: String?
     var build: String {
-        launch(command: tool.command, arguments: tool.buildArguments)
+        commandHandler.invoke(tool.command, with: tool.buildArguments)
     }
 
     var branch: String {
@@ -48,16 +49,20 @@ final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Private Properties
 
     private var tag: String {
-        launch(command: tool.command, arguments: tool.tagArguments)
+        commandHandler.invoke(tool.command, with: tool.tagArguments)
     }
     
     private lazy var branchCommandOutput: String = {
-        launch(command: tool.command, arguments: tool.branchArguments)
+        commandHandler.invoke(tool.command, with: tool.branchArguments)
     }()
 
     private var tagBits: [String]?
     private var isReleaseCandidate: Bool = false
     private var tool: VersionControlSystem
+    
+    // MARK: - Dependencies
+    
+    @Injected private var commandHandler: CommandHandlerProtocol
 
     // MARK: - Init
 
@@ -77,8 +82,9 @@ final class VersionHandler: VersionHandlerProtocol {
     }
     
     private func checkVersionControlSystem() {
-        let isToolInstalled = launch(command: "which", arguments: [tool.command]) != "\(tool.command) not found"
-        let isRepository = launch(command: tool.command, arguments: tool.repositoryCheckArguments) == tool.isRepositoryOutput
+        let whichCommand = "which"
+        let isToolInstalled = commandHandler.invoke(whichCommand, with: [tool.command]) != "\(tool.command) not found"
+        let isRepository = commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.isRepositoryOutput
         if isToolInstalled {
             if !isRepository {
                 Log.error("Unable to read version from directory that is not a repository!")
