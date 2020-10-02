@@ -13,7 +13,7 @@ protocol VersionManagerProtocol {
 final class VersionManager: VersionManagerProtocol {
     // MARK: - Dependencies
     
-    @Injected var versionHandler: VersionHandlerProtocol
+    @Injected private var versionHandler: VersionHandlerProtocol
     
     // MARK: - Methods
     
@@ -39,13 +39,4 @@ final class VersionManager: VersionManagerProtocol {
         
         return versionLong
     }
-    
-//    private func branchLong() -> String {
-//        var branchLong: String = versionHandler.branch
-//        if let branchFlow = versionHandler.branchFlow {
-//            branchLong = "\(branchFlow)/\(versionHandler.branch)"
-//        }
-//
-//        return branchLong
-//    }
 }
