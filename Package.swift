@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-versioning",
+    name: "SwiftVersioning",
     platforms: [
         .macOS(.v10_14)
     ],
     products: [
-        .executable(name: "swift-versioning", targets: ["swift-versioning"])
+        .executable(name: "swift-versioning", targets: ["SwiftVersioning"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),
@@ -18,12 +18,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "swift-versioning", dependencies: [
+            name: "SwiftVersioning", dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Resolver", package: "Resolver"),
                 .product(name: "Logging", package: "swift-log"),
         ]),
         .testTarget(
-            name: "swift-versioningTests", dependencies: ["swift-versioning"]),
+            name: "SwiftVersioningTests", dependencies: ["SwiftVersioning"]),
     ]
 )
