@@ -23,7 +23,5 @@ let package = Package(
                 .product(name: "Resolver", package: "Resolver"),
                 .product(name: "Logging", package: "swift-log"),
         ]),
-        .testTarget(
-            name: "SwiftVersioningTests", dependencies: ["SwiftVersioning"]),
     ]
 )
