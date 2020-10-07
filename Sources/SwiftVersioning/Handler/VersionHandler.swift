@@ -25,9 +25,7 @@ final class VersionHandler: VersionHandlerProtocol {
     var major: String?
     var minor: String?
     var patch: String?
-    var build: String {
-        commandHandler.invoke(tool.command, with: tool.buildArguments)
-    }
+    var build: String { invokeBuildCommand() }
 
     var branch: String {
         let separator = "/"
@@ -40,20 +38,14 @@ final class VersionHandler: VersionHandlerProtocol {
         return branchComponents.joined(separator: separator)
     }
     
-    var branchLong: String {
-        branchCommandOutput
-    }
-    
+    var branchLong: String { branchCommandOutput }
     var branchFlow: String?
 
     // MARK: - Private Properties
 
-    private var tag: String {
-        commandHandler.invoke(tool.command, with: tool.tagArguments)
-    }
-    
+    private var tag: String { invokeTagCommand() }
     private lazy var branchCommandOutput: String = {
-        commandHandler.invoke(tool.command, with: tool.branchArguments)
+        invokeBranchCommand()
     }()
 
     private var tagBits: [String]?
@@ -69,29 +61,25 @@ final class VersionHandler: VersionHandlerProtocol {
     init(for tool: VersionControlSystem) {
         self.tool = tool
 
-        bootstrap()
-    }
-
-    // MARK: - Private Methods
-
-    private func bootstrap() {
         checkVersionControlSystem()
-        
-        setupVersion()
-        setupSemantics()
+        bootstrap()
     }
     
     private func checkVersionControlSystem() {
-        let whichCommand = "which"
-        let isToolInstalled = commandHandler.invoke(whichCommand, with: [tool.command]) != "\(tool.command) not found"
-        let isRepository = commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.isRepositoryOutput
-        if isToolInstalled {
-            if !isRepository {
+        if isVersionControlSystemInstalled() {
+            if !isRepository() {
                 Log.error("Unable to read version from directory that is not a repository!")
             }
         } else {
             Log.error("\(tool.command) not installed!")
         }
+    }
+
+    // MARK: - Setup
+
+    private func bootstrap() {
+        setupVersion()
+        setupSemantics()
     }
 
     private func setupVersion() {
@@ -119,5 +107,32 @@ final class VersionHandler: VersionHandlerProtocol {
         } else {
             Log.error("Unable to retrieve semantics from tag.")
         }
+    }
+}
+
+// MARK: - Command Helper
+
+extension VersionHandler {
+    func invokeBuildCommand() -> String {
+        commandHandler.invoke(tool.command, with: tool.buildArguments)
+    }
+    
+    func invokeBranchCommand() -> String {
+        commandHandler.invoke(tool.command, with: tool.branchArguments)
+    }
+    
+    func invokeTagCommand() -> String {
+        commandHandler.invoke(tool.command, with: tool.tagArguments)
+    }
+    
+    func isVersionControlSystemInstalled() -> Bool {
+        let whichCommand = "which"
+        let whichCommandResult = commandHandler.invoke(whichCommand, with: [tool.command])
+        let whichCommandFailureResult = "\(tool.command) not found"
+        return whichCommandResult != whichCommandFailureResult
+    }
+    
+    func isRepository() -> Bool {
+        commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.isRepositoryOutput
     }
 }
