@@ -59,7 +59,7 @@ limitations under the License.
 
 # About
 
-`swift-versioning` is maintained with :heart: by [NanoGiants GmbH.](https.//www.nanogiants.de/)
+`swift-versioning` is maintained with :heart: by [NanoGiants GmbH.](https://www.nanogiants.de/)
 
 Say hi on twitter [@wearenanogiants](https://twitter.com/wearenanogiants) or visit our other [open sourced](https://www.github.com/nanogiants/) projects.
 
