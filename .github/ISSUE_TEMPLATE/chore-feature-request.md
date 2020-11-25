@@ -1,8 +1,8 @@
 ---
-name: Feature request
-about: Suggest a new feature for this project
-title: "[REQUEST]"
-labels: enhancement
+name: Chore Feature request
+about: Suggest an idea that enhances contributing and building this project
+title: ''
+labels: ''
 assignees: nihilias
 
 ---
