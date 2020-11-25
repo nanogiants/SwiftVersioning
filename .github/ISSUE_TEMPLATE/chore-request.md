@@ -1,7 +1,7 @@
 ---
 name: Chore request
 about: Suggest an idea that enhances contributing and building this project
-title: "[CHORE]"
+title: "[REQUEST]"
 labels: chore
 assignees: nihilias
 
