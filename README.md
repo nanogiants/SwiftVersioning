@@ -1,8 +1,8 @@
-# swift-versioning
+# SwiftVersioning
 
 A `Swift` command-line tool to add version information from your repository to your Xcode project.
 
-`swift-versioning` extracts specific version information from your git repository and writes them into a given .plist file. The corresponding build can use these information at runtime for advanced version checks or other general applications.
+`swiftversioning` extracts specific version information from your git repository and writes them into a given .plist file. The corresponding build can use these information at runtime for advanced version checks or other general applications.
 
 # Installation
 
@@ -12,26 +12,26 @@ tbd.
 
 ## Compiling from Source:
 
-Installing `swift-versioning` from source only requires cloning this repository and building it for release. Running the following commands will get you there:
+Installing `swiftversioning` from source only requires cloning this repository and building it for release. Running the following commands will get you there:
 ```
-git clone https://github.com/nanogiants/swift-versioning.git
-cd swift-versioning
+git clone https://github.com/nanogiants/swiftversioning.git
+cd swiftversioning
 
 swift build -c release
-cp -f .build/release/swift-versioning /usr/local/bin/swift-versioning
+cp -f .build/release/swiftversioning /usr/local/bin/swiftversioning
 ```
 
 # Usage
 
 ## Xcode
 
-Integrate `swift-versioning` into your Xcode scheme via adding a new 'Run Script Phase' with:
+Integrate `swiftversioning` into your Xcode scheme via adding a new 'Run Script Phase' with:
 ```
-if which swift-versioning >/dev/null; then
-  swift-versioning run ${PATH_TO_PLIST}
+if which swiftversioning >/dev/null; then
+  swiftversioning run ${PATH_TO_PLIST}
 else
-  echo "warning: swift-versioning not installed"
-  echo "swift-versioning wasn't installed correctly or couldn't be found, download or reinstall from https://github.com/nanogiants/swift-versioning"
+  echo "warning: swiftversioning not installed"
+  echo "swiftversioning wasn't installed correctly or couldn't be found, download or reinstall from https://github.com/nanogiants/swiftversioning"
 fi
 ```
 Where `${PATH_TO_PLIST}` the path to a .plist file is from which you want to read the freshly saved version information.
@@ -59,7 +59,7 @@ limitations under the License.
 
 # About
 
-`swift-versioning` is maintained with :heart: by [NanoGiants GmbH.](https://www.nanogiants.de/)
+`swiftversioning` is maintained with :heart: by [NanoGiants GmbH.](https://www.nanogiants.de/)
 
 Say hi on twitter [@wearenanogiants](https://twitter.com/wearenanogiants) or visit our other [open sourced](https://www.github.com/nanogiants/) projects.
 

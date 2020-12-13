@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v10_14)
     ],
     products: [
-        .executable(name: "swift-versioning", targets: ["SwiftVersioning"])
+        .executable(name: "swiftversioning", targets: ["SwiftVersioning"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),

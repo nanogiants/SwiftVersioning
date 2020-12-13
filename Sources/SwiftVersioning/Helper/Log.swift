@@ -18,7 +18,7 @@ final class Log {
     // MARK: - Init
 
     private init() {
-        self.logger = Logger(label: "eu.NanoGiants.swift-versioning",
+        self.logger = Logger(label: "eu.NanoGiants.swiftversioning",
                              factory: StreamLogHandler.standardError(label:))
     }
 
