@@ -4,7 +4,7 @@
 //
 
 import XCTest
-@testable import swiftversioning
+@testable import SwiftVersioning
 
 final class SwiftVersioningTests: XCTestCase {
     func testGitVersionControlSystem() {}
