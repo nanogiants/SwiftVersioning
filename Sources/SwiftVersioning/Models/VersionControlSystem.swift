@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol VersionControlSystem {
+public protocol VersionControlSystem {
     var command: String { get }
     var tagArguments: [String] { get }
     var buildArguments: [String] { get }
@@ -14,28 +14,28 @@ protocol VersionControlSystem {
     var isRepositoryOutput: String { get }
 }
 
-struct Git: VersionControlSystem {
-    var command: String {
+public struct Git: VersionControlSystem {
+    public var command: String {
         "git"
     }
 
-    var tagArguments: [String] {
+    public var tagArguments: [String] {
         ["describe", "--abbrev=0", "--tags"]
     }
 
-    var buildArguments: [String] {
+    public var buildArguments: [String] {
         ["rev-list", "--count", "HEAD"]
     }
 
-    var branchArguments: [String] {
+    public var branchArguments: [String] {
         ["rev-parse", "--abbrev-ref", "HEAD"]
     }
     
-    var repositoryCheckArguments: [String] {
+    public var repositoryCheckArguments: [String] {
         ["rev-parse", "--git-dir"]
     }
     
-    var isRepositoryOutput: String {
+    public var isRepositoryOutput: String {
         ".git"
     }
 }
