@@ -20,7 +20,6 @@ https://github.com/nanogiants/SwiftVersioning.git
 
 You can add this package to your `Package.swift` file, too:
 
-```
 ```swift
 dependencies: [
     .package(url: "https://github.com/nanogiants/SwiftVersioning.git", .from: "1.0.0")
