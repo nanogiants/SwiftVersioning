@@ -26,7 +26,7 @@ struct Git: VersionControlSystem {
         ["rev-parse", "--git-dir"]
     }
 
-    var isRepositoryOutput: String {
+    var outputRepositoryCheck: String {
         ".git"
     }
 }

@@ -133,6 +133,6 @@ extension VersionHandler {
     }
 
     func isRepository() -> Bool {
-        commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.isRepositoryOutput
+        commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.outputRepositoryCheck
     }
 }

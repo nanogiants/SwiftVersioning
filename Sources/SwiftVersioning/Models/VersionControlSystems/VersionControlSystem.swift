@@ -11,5 +11,5 @@ protocol VersionControlSystem {
     var buildArguments: [String] { get }
     var branchArguments: [String] { get }
     var repositoryCheckArguments: [String] { get }
-    var isRepositoryOutput: String { get }
+    var outputRepositoryCheck: String { get }
 }
