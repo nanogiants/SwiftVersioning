@@ -1,5 +1,7 @@
 # SwiftVersioning
 
+[![build](https://github.com/nanogiants/SwiftVersioning/workflows/build/badge.svg)](https://github.com/nanogiants/SwiftVersioning/actions)
+
 A `Swift` command-line tool to add version information from your repository to your Xcode project.
 
 `swiftversioning` extracts specific version information from your git repository and writes them into a given .plist file. The corresponding build can use these information at runtime for advanced version checks or other general applications.
