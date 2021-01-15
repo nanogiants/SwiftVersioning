@@ -4,44 +4,36 @@
 //
 
 import Foundation
-import Logging
+
 
 final class Log {
     // MARK: - Properties
 
+    static var isVerbose: Bool = false
     private static var sharedLog: Log = {
-        Log()
+        Log(commandHandler: CommandHandler())
     }()
 
-    private var logger: Logger
+    // MARK: - Dependencies
+
+    private var commandHandler: CommandHandlerProtocol
 
     // MARK: - Init
 
-    private init() {
-        self.logger = Logger(label: "eu.NanoGiants.swiftversioning",
-                             factory: StreamLogHandler.standardError(label:))
+    private init(commandHandler: CommandHandlerProtocol) {
+        self.commandHandler = commandHandler
     }
 
     // MARK: - Methods
 
-    class func logLevel(_ isVerbose: Bool) {
-        sharedLog.logger.logLevel = isVerbose ? .trace : .info
+    class func debug(_ message: String) {
+        if isVerbose {
+            sharedLog.commandHandler.log(message)
+        }
     }
 
-    class func verbose(_ message: Logger.Message) {
-        sharedLog.logger.trace(message)
-    }
-
-    class func info(_ message: Logger.Message) {
-        sharedLog.logger.info(message)
-    }
-
-    class func warning(_ message: Logger.Message) {
-        sharedLog.logger.warning(message)
-    }
-
-    class func error(_ message: Logger.Message) {
-        sharedLog.logger.error(message)
+    class func error(_ message: String) {
+        sharedLog.commandHandler.log(message)
         exit(EXIT_FAILURE)
     }
 }

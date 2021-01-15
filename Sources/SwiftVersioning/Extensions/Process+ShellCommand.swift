@@ -27,6 +27,7 @@ extension Process {
     }
 }
 
+@discardableResult
 func launch(command: String, arguments: [String]) -> String {
     let process = Process()
     let command = "\(command) \(arguments.joined(separator: " "))"
