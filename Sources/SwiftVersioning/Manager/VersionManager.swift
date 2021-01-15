@@ -6,7 +6,8 @@
 import Foundation
 
 protocol VersionManagerProtocol {
-    func version() -> Version
+    func runVersion() -> RunVersion
+    func bundleVersion() -> BundleVersion
 }
 
 final class VersionManager: VersionManagerProtocol {
@@ -22,16 +23,28 @@ final class VersionManager: VersionManagerProtocol {
 
     // MARK: - Methods
 
-    func version() -> Version {
-        Version(version: versionHandler.version,
-                versionLong: versionLong(),
-                major: versionHandler.major,
-                minor: versionHandler.minor,
-                patch: versionHandler.patch,
-                build: versionHandler.build,
-                branch: versionHandler.branch,
-                branchLong: versionHandler.branchLong,
-                branchFlow: versionHandler.branchFlow)
+    func runVersion() -> RunVersion {
+        RunVersion(
+            version: versionHandler.version,
+            versionLong: versionLong(),
+            major: versionHandler.major,
+            minor: versionHandler.minor,
+            patch: versionHandler.patch,
+            build: versionHandler.build,
+            branch: versionHandler.branch,
+            branchLong: versionHandler.branchLong,
+            branchFlow: versionHandler.branchFlow
+        )
+    }
+
+    func bundleVersion() -> BundleVersion {
+        BundleVersion(
+            bundleShortVersion: versionHandler.version,
+            bundleBuildVersion: versionHandler.build,
+            branch: versionHandler.branch,
+            branchLong: versionHandler.branchLong,
+            branchFlow: versionHandler.branchFlow
+        )
     }
 
     // MARK: - Private Methods

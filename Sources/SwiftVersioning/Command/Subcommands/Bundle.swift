@@ -1,18 +1,18 @@
 //
-// Created by NanoGiants GmbH on 28.08.20.
+// Created by NanoGiants GmbH on 15.01.21.
 // Copyright © 2020 NanoGiants GmbH. All rights reserved.
 //
 
 import ArgumentParser
 
-struct Run: ParsableCommand {
+struct Bundle: ParsableCommand {
     // MARK: - Properties
 
-    public static let configuration = CommandConfiguration(abstract: Abstract.SwiftVersioning.run)
+    public static let configuration = CommandConfiguration(abstract: Abstract.SwiftVersioning.bundle)
 
     // MARK: - Command
 
-    @Argument(help: "\(Help.SwiftVersioning.Run.path)")
+    @Argument(help: "\(Help.SwiftVersioning.Bundle.path)")
     private var path: String
 
     @Flag(name: .long, help: ArgumentHelp(Help.SwiftVersioning.General.verbose, discussion: "", shouldDisplay: true))
@@ -33,6 +33,6 @@ struct Run: ParsableCommand {
         let versionManager: VersionManagerProtocol = VersionManager(versionHandler: versionHandler)
         let plistHandler: PlistHandlerProtocol = PlistHandler()
 
-        plistHandler.write(versionManager.runVersion(), to: path)
+        plistHandler.write(versionManager.bundleVersion(), to: path)
     }
 }

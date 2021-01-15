@@ -8,6 +8,7 @@ import Foundation
 internal enum Abstract {
     internal static let swiftVersioning = "A Swift command-line tool to add git versioning to your Xcode project."
     internal enum SwiftVersioning {
-        internal static let run = "Let the tool run through your repository and add specifics to your apps plist."
+        internal static let run = "Let swiftversioning run through your repository and add specifics as new keys to your projects plist."
+        internal static let bundle = "Let swiftversioning run through your repository, update `CFBundleShortVersionString` and `CFBundleVersion` and add new version specifics as new keys to your projects plist."
     }
 }

@@ -8,7 +8,7 @@ import ArgumentParser
 struct SwiftVersioning: ParsableCommand {
     public static let configuration = CommandConfiguration(
         abstract: Abstract.swiftVersioning,
-        subcommands: [Run.self])
+        subcommands: [Run.self, Bundle.self])
 
     init() {}
 }
