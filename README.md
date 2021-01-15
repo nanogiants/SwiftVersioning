@@ -1,5 +1,7 @@
 # SwiftVersioning
 
+![swift](https://img.shields.io/badge/Swift-5.2-F16D39.svg?style=flat)
+[![spm](https://img.shields.io/badge/Supports-_Swift_Package_Manager-F16D39.svg?style=flat)](https://swift.org/package-manager/)
 [![build](https://github.com/nanogiants/SwiftVersioning/workflows/build/badge.svg)](https://github.com/nanogiants/SwiftVersioning/actions)
 
 A `Swift` command-line tool to add version information from your repository to your Xcode project.
@@ -8,13 +10,33 @@ A `Swift` command-line tool to add version information from your repository to y
 
 # Installation
 
-## Using [Homebrew](http://brew.sh/):
+## Using Swift Package Manager
 
-tbd.
+With Xcode you can add this package using the Swift Package Manager via this link:
+
+```
+https://github.com/nanogiants/SwiftVersioning.git
+```
+
+You can add this package to your `Package.swift` file, too:
+
+```
+```swift
+dependencies: [
+    .package(url: "https://github.com/nanogiants/SwiftVersioning.git", .from(from: "1.0.0"))
+]
+```
+
+When integration `SwiftVersioning` via SPM, you can use the following path to the binary:
+
+```
+${BUILD_DIR%Build/*}SourcePackages/checkouts/SwiftVersioning/bin/swiftversioning
+```
 
 ## Compiling from Source:
 
 Installing `swiftversioning` from source only requires cloning this repository and building it for release. Running the following commands will get you there:
+
 ```
 git clone https://github.com/nanogiants/swiftversioning.git
 cd swiftversioning
@@ -23,26 +45,61 @@ swift build -c release
 cp -f .build/release/swiftversioning /usr/local/bin/swiftversioning
 ```
 
+When compiling the package from source and adding the binary to your local binaries like above, you are not required to add a
+path to the `swiftversioning` call.
+
+```
+swiftversioning run ${PATH_TO_PLIST}
+```
+
 # Usage
 
 ## Xcode
 
 Integrate `swiftversioning` into your Xcode scheme via adding a new 'Run Script Phase' with:
+
 ```
 if which swiftversioning >/dev/null; then
-  swiftversioning run ${PATH_TO_PLIST}
+  ${PATH_TO_BINARY}/swiftversioning run ${PATH_TO_PLIST}
 else
   echo "warning: swiftversioning not installed"
   echo "swiftversioning wasn't installed correctly or couldn't be found, download or reinstall from https://github.com/nanogiants/swiftversioning"
 fi
 ```
-Where `${PATH_TO_PLIST}` the path to a .plist file is from which you want to read the freshly saved version information.
+
 
 ## Command Line
 
-tbd.
+```
+$ swiftversioning
+OVERVIEW: A Swift command-line tool to add git versioning to your Xcode project.
+
+USAGE: swift-versioning <subcommand>
+
+OPTIONS:
+  -h, --help              Show help information.
+
+SUBCOMMANDS:
+  run                     Let the tool run through your repository and add specifics to your
+                          apps plist.
+```
+
+Let  `SwiftVersioning` run over you .plist and add multiple version and branch information to it.
+
+```
+$ swiftversioning run
+USAGE: swift-versioning run <path> [--verbose]
+
+ARGUMENTS:
+  <path>                  Path to plist.
+
+OPTIONS:
+  --verbose               Show extra logging for debugging purposes.
+  -h, --help              Show help information.
+```
 
 # License
+
 ```
 Copyright (C) 2020 NanoGiants GmbH
 
