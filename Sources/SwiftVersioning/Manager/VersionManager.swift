@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Resolver
 
 protocol VersionManagerProtocol {
     func version() -> Version
@@ -12,11 +11,17 @@ protocol VersionManagerProtocol {
 
 final class VersionManager: VersionManagerProtocol {
     // MARK: - Dependencies
-    
-    @Injected private var versionHandler: VersionHandlerProtocol
-    
+
+    private var versionHandler: VersionHandlerProtocol
+
+    // MARK: - Init
+
+    init(versionHandler: VersionHandlerProtocol) {
+        self.versionHandler = versionHandler
+    }
+
     // MARK: - Methods
-    
+
     func version() -> Version {
         Version(version: versionHandler.version,
                 versionLong: versionLong(),
@@ -28,15 +33,15 @@ final class VersionManager: VersionManagerProtocol {
                 branchLong: versionHandler.branchLong,
                 branchFlow: versionHandler.branchFlow)
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func versionLong() -> String? {
         var versionLong: String?
         if let version = versionHandler.version {
             versionLong = "\(version) (\(versionHandler.build))"
         }
-        
+
         return versionLong
     }
 }

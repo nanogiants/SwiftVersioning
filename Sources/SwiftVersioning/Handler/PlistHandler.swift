@@ -11,16 +11,16 @@ protocol PlistHandlerProtocol {
 
 final class PlistHandler: PlistHandlerProtocol {
     // MARK: - Methode
-    
+
     func write(_ version: Version, to plistPathString: String) {
         Log.info("Begin writing version to given plist path.")
         if let plistUrl = plistPathString.validPath() {
             save(version, to: plistUrl)
         }
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func save(_ version: Version, to plistUrl: URL) {
         Log.info("Begin saving version to valid plist URL.")
         do {
@@ -39,10 +39,10 @@ final class PlistHandler: PlistHandlerProtocol {
             Log.error("Unable to write merged plist and version data to plist: \(error)")
         }
     }
-    
+
     private func read(_ plistUrl: URL) -> [String : Any]? {
         Log.info("Reading plist from given URL.")
-        
+
         if let plist = FileManager.default.contents(atPath: plistUrl.path) {
             Log.verbose("... successfully getting content from plist!")
             return PropertyListSerialization.dictionary(from: plist)

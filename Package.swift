@@ -9,19 +9,25 @@ let package = Package(
         .macOS(.v10_14)
     ],
     products: [
-        .executable(name: "swiftversioning", targets: ["SwiftVersioning"])
+        .executable(
+            name: "swiftversioning",
+            targets: ["SwiftVersioning"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),
-        .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.1.4"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
     ],
     targets: [
         .target(
-            name: "SwiftVersioning", dependencies: [
+            name: "SwiftVersioning",
+            dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "Resolver", package: "Resolver"),
-                .product(name: "Logging", package: "swift-log"),
-        ]),
+                .product(name: "Logging", package: "swift-log")
+            ]
+        ),
+        .testTarget(
+            name: "SwiftVersioningTests",
+            dependencies: ["SwiftVersioning"]),
     ]
 )

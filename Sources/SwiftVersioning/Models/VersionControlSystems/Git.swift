@@ -5,15 +5,6 @@
 
 import Foundation
 
-protocol VersionControlSystem {
-    var command: String { get }
-    var tagArguments: [String] { get }
-    var buildArguments: [String] { get }
-    var branchArguments: [String] { get }
-    var repositoryCheckArguments: [String] { get }
-    var isRepositoryOutput: String { get }
-}
-
 struct Git: VersionControlSystem {
     var command: String {
         "git"
@@ -30,12 +21,12 @@ struct Git: VersionControlSystem {
     var branchArguments: [String] {
         ["rev-parse", "--abbrev-ref", "HEAD"]
     }
-    
+
     var repositoryCheckArguments: [String] {
         ["rev-parse", "--git-dir"]
     }
-    
-    var isRepositoryOutput: String {
+
+    var outputRepositoryCheck: String {
         ".git"
     }
 }

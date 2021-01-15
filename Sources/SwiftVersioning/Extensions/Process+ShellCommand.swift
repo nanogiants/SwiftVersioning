@@ -6,7 +6,7 @@
 import Foundation
 
 extension Process {
-    public func shell(command: String) -> String {
+    func shell(command: String) -> String {
         launchPath = "/bin/bash"
         arguments = ["-c", command]
 
@@ -27,7 +27,7 @@ extension Process {
     }
 }
 
-public func launch(command: String, arguments: [String]) -> String {
+func launch(command: String, arguments: [String]) -> String {
     let process = Process()
     let command = "\(command) \(arguments.joined(separator: " "))"
     return process.shell(command: command)

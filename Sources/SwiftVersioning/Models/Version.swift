@@ -12,11 +12,11 @@ struct Version: Codable {
     var minor: String?
     var patch: String?
     var build: String?
-    
+
     var branch: String?
     var branchLong: String?
     var branchFlow: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case version = "SVVersion"
         case versionLong = "SVVersionLong"
@@ -24,12 +24,12 @@ struct Version: Codable {
         case minor = "SVMinorVersion"
         case patch = "SVPatchVersion"
         case build = "SVBuildNumber"
-        
+
         case branch = "SVBranch"
         case branchLong = "SVBranchLong"
         case branchFlow = "SVBranchFlow"
     }
-    
+
     func dictionary() -> [String: Any]? {
         Log.info("Converting version to mergable dictionary.")
         do {
@@ -40,7 +40,7 @@ struct Version: Codable {
             let data = try encoder.encode(self)
             Log.verbose("... converting data to dictionary.")
             let plist = PropertyListSerialization.dictionary(from: data)
-            
+
             return plist
         } catch {
             Log.error("Unable to encode `Version` to data: \(error)")

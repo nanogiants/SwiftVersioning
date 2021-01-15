@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Resolver
 
 protocol VersionHandlerProtocol {
     var version: String? { get }
@@ -20,7 +19,7 @@ protocol VersionHandlerProtocol {
 
 final class VersionHandler: VersionHandlerProtocol {
     // MARK: - Properties
-    
+
     var version: String?
     var major: String?
     var minor: String?
@@ -34,10 +33,10 @@ final class VersionHandler: VersionHandlerProtocol {
             branchFlow = branchComponents.first
             return branchComponents[1]
         }
-        
+
         return branchComponents.joined(separator: separator)
     }
-    
+
     var branchLong: String { branchCommandOutput }
     var branchFlow: String?
 
@@ -51,20 +50,21 @@ final class VersionHandler: VersionHandlerProtocol {
     private var tagBits: [String]?
     private var isReleaseCandidate: Bool = false
     private var tool: VersionControlSystem
-    
+
     // MARK: - Dependencies
-    
-    @Injected private var commandHandler: CommandHandlerProtocol
+
+    private var commandHandler: CommandHandlerProtocol
 
     // MARK: - Init
 
-    init(for tool: VersionControlSystem) {
+    init(commandHandler: CommandHandlerProtocol, for tool: VersionControlSystem) {
+        self.commandHandler = commandHandler
         self.tool = tool
 
         checkVersionControlSystem()
         bootstrap()
     }
-    
+
     private func checkVersionControlSystem() {
         if isVersionControlSystemInstalled() {
             if !isRepository() {
@@ -116,23 +116,23 @@ extension VersionHandler {
     func invokeBuildCommand() -> String {
         commandHandler.invoke(tool.command, with: tool.buildArguments)
     }
-    
+
     func invokeBranchCommand() -> String {
         commandHandler.invoke(tool.command, with: tool.branchArguments)
     }
-    
+
     func invokeTagCommand() -> String {
         commandHandler.invoke(tool.command, with: tool.tagArguments)
     }
-    
+
     func isVersionControlSystemInstalled() -> Bool {
         let whichCommand = "which"
         let whichCommandResult = commandHandler.invoke(whichCommand, with: [tool.command])
         let whichCommandFailureResult = "\(tool.command) not found"
         return whichCommandResult != whichCommandFailureResult
     }
-    
+
     func isRepository() -> Bool {
-        commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.isRepositoryOutput
+        commandHandler.invoke(tool.command, with: tool.repositoryCheckArguments) == tool.outputRepositoryCheck
     }
 }
