@@ -16,21 +16,13 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.0"),
-        .package(url: "https://github.com/hmlongco/Resolver.git", from: "1.1.4"),
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "SwiftVersioning",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "Resolver", package: "Resolver"),
-                .product(name: "Logging", package: "swift-log")
-            ]
-        ),
+            dependencies: []),
         .testTarget(
             name: "SwiftVersioningTests",
-            dependencies: ["SwiftVersioning"]
-        ),
+            dependencies: ["SwiftVersioning"]),
     ]
 )
