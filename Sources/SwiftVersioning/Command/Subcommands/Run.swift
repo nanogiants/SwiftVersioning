@@ -21,10 +21,10 @@ struct Run: ParsableCommand {
     // MARK: - Run
 
     func run() throws {
-        Log.logLevel(verbose)
-        Log.verbose("Checking arguments:")
-        Log.verbose("... path: \(path)")
-        Log.verbose("... verbose: \(verbose)")
+        Log.isVerbose = verbose
+        Log.debug("Checking arguments:")
+        Log.debug("... path: \(path)")
+        Log.debug("... verbose: \(verbose)")
 
         let versionHandler: VersionHandlerProtocol = VersionHandler(
             commandHandler: CommandHandler(),

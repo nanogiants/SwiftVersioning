@@ -23,7 +23,7 @@ You can add this package to your `Package.swift` file, too:
 ```
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nanogiants/SwiftVersioning.git", .from(from: "1.0.0"))
+    .package(url: "https://github.com/nanogiants/SwiftVersioning.git", .from: "1.0.0")
 ]
 ```
 
@@ -74,7 +74,7 @@ fi
 $ swiftversioning
 OVERVIEW: A Swift command-line tool to add git versioning to your Xcode project.
 
-USAGE: swift-versioning <subcommand>
+USAGE: swiftversioning <subcommand>
 
 OPTIONS:
   -h, --help              Show help information.
@@ -84,11 +84,11 @@ SUBCOMMANDS:
                           apps plist.
 ```
 
-Let  `SwiftVersioning` run over you .plist and add multiple version and branch information to it.
+Let  `swiftversioning` run over you .plist and add multiple version and branch information to it.
 
 ```
 $ swiftversioning run
-USAGE: swift-versioning run <path> [--verbose]
+USAGE: swiftversioning run <path> [--verbose]
 
 ARGUMENTS:
   <path>                  Path to plist.
