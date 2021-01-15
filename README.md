@@ -67,7 +67,6 @@ else
 fi
 ```
 
-
 ## Command Line
 
 ```
@@ -80,14 +79,35 @@ OPTIONS:
   -h, --help              Show help information.
 
 SUBCOMMANDS:
-  run                     Let the tool run through your repository and add specifics to your
-                          apps plist.
+  run                     Let swiftversioning run through your repository and add version specifics as new keys to your
+                          projects plist.
+  bundle                  Let swiftversioning run through your repository, update `CFBundleShortVersionString` and
+                          `CFBundleVersion` and add additional branch specifics as new keys to your projects plist.
 ```
 
-Let  `swiftversioning` run over you .plist and add multiple version and branch information to it.
+Update bundle information in your .plist and branch specifics as new keys to your projects .plist.
+
+```
+$ swiftversioning bundle
+OVERVIEW: Let swiftversioning run through your repository, update `CFBundleShortVersionString` and
+`CFBundleVersion` and add additional branch specifics as new keys to your projects plist.
+
+USAGE: swiftversioning bundle <path> [--verbose]
+
+ARGUMENTS:
+  <path>                  Path to plist.
+
+OPTIONS:
+  --verbose               Show extra logging for debugging purposes.
+  -h, --help              Show help information.
+```
+
+Let  `swiftversioning` run over you .plist and add multiple version and branch information as new keys with `SV` as prefix to it.
 
 ```
 $ swiftversioning run
+OVERVIEW: Let swiftversioning run through your repository and add version specifics as new keys to your projects plist.
+
 USAGE: swiftversioning run <path> [--verbose]
 
 ARGUMENTS:
@@ -96,6 +116,23 @@ ARGUMENTS:
 OPTIONS:
   --verbose               Show extra logging for debugging purposes.
   -h, --help              Show help information.
+```
+
+### Version Specifics
+
+```swift
+enum CodingKeys: String, CodingKey {
+    case version = "SVVersion" // e.g. 1.0.1
+    case versionLong = "SVVersionLong" // e.g. 1.0.1 (5)
+    case major = "SVMajorVersion"
+    case minor = "SVMinorVersion"
+    case patch = "SVPatchVersion"
+    case build = "SVBuildNumber"
+
+    case branch = "SVBranch" // e.g. SV-10_update-usage-doc
+    case branchLong = "SVBranchLong" // e.g. feature/SV-10_update-usage-doc
+    case branchFlow = "SVBranchFlow" // e.g. feature
+}
 ```
 
 # License
